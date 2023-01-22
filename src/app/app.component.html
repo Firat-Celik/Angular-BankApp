@@ -1,0 +1,65 @@
+<mat-toolbar  [ngStyle]="{'background-color': '#2196f3','color':'white'}">
+  <span>Banka Uygulaması</span>
+  <span class="spacer"></span>
+
+</mat-toolbar>
+<div class="container mat-elevation-z8">
+
+  <div class="form">
+    <mat-form-field floatPlaceholder="never" color="accent">
+      <input matInput #filter placeholder="Filter issues">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+    ng update @angular/cli @angular/core
+    <ng-container matColumnDef="hesapNo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>hesapNo</mat-header-cell>
+      <mat-cell *matCellDef="let row" >{{row.hesapNo}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="hesapAdi">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>hesapAdi</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.hesapAdi}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="bakiye">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>bakiye</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.bakiye}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="paraBirimi">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>paraBirimi</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.paraBirimi}}</mat-cell>
+    </ng-container>
+
+
+     İşlemler
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-raised-button (click)="depositMoney(i, row.hesapNo, row.hesapAdi, row.bakiye, row.paraBirimi)"><i class="material-icons" [ngStyle]="{'color':'#2196f3'}">add</i>Para Yatır</button>
+        <button mat-raised-button (click)="withdrawMoney(i, row.hesapNo, row.hesapAdi, row.bakiye, row.paraBirimi)"><i class="material-icons"  [ngStyle]="{'color':'#f44336'}">horizontal_rule</i> Para Çek</button>
+        </mat-cell>
+
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+
+  <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+    No results
+  </div>
+
+  <mat-paginator #paginator
+                 [length]="dataSource.filteredData.length"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>
